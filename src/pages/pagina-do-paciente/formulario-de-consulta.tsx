@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { Button, Col, FloatingLabel, Form, Row, Stack } from "react-bootstrap";
 import { calcularStatusDaCondicao, generateUUID } from "../../lib/minhas-funcoes";
 import { api } from "../../lib/axios.ts";
@@ -27,7 +27,6 @@ export function FormularioDeConsulta({
   const [respiracao, setRespiracao] = useState("")
   const [temperatura, setTemperatura] = useState("")
   const [exibindoCheckBoxesDeSintomas, setExibindoCheckBoxesDeSintomas] = useState(false)
-  const [formularioValido, setFormularioValido] = useState(false)
   const [boatoFinalizarAtivo, setBoatoFinalizarAtivo] = useState(true)
 
   const statusDaPressaoArterialDiastolica = calcularStatusDaCondicao("pressao arterial diastólica", Number(pressaoArterialDiastolica))
@@ -35,7 +34,11 @@ export function FormularioDeConsulta({
   const statusDaFrequenciaCardiaca = calcularStatusDaCondicao("frequência cardíaca",Number(frequenciaCardiaca))
   const statusDaRespiracao = calcularStatusDaCondicao("respiracao", Number(respiracao))
   const statusDaTemperatura = calcularStatusDaCondicao("temperatura", Number(temperatura))
-
+  const formularioValido = validarCondicao(pressaoArterialSistolica) &&
+    validarCondicao(pressaoArterialDiastolica) &&
+    validarCondicao(temperatura) &&
+    validarCondicao(frequenciaCardiaca) &&
+    validarCondicao(respiracao)
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     setBoatoFinalizarAtivo(false)
@@ -89,23 +92,6 @@ export function FormularioDeConsulta({
         esconderFormularioDeConsulta()
       })
   }
-
-  function handleChange() {
-    if(
-      validarCondicao(pressaoArterialSistolica) &&
-      validarCondicao(pressaoArterialDiastolica) &&
-      validarCondicao(temperatura) &&
-      validarCondicao(frequenciaCardiaca) &&
-      validarCondicao(respiracao)
-    ) {
-      setFormularioValido(true)
-    } else {
-      setFormularioValido(false)
-    }
-  }
-
-  useEffect(handleChange, 
-    [pressaoArterialDiastolica, pressaoArterialSistolica, temperatura, frequenciaCardiaca, respiracao])
 
   function exibirCheckBoxesDeSintomas() {
     setExibindoCheckBoxesDeSintomas(true)
