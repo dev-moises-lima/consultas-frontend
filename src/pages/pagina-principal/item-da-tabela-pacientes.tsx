@@ -11,8 +11,8 @@ export function ItemDaTabelaPacientes({
   paciente,
 }: ItemDaTabelaPacientesProps) {
   const hoje = moment()
-  const dataDeNAcimento = moment(paciente.data_de_nascimento)
-  const idadeDoPaciente = hoje.diff(dataDeNAcimento, "year")
+  const dataDeNascimento = moment(paciente.data_de_nascimento, "YYYY/MM/DD")
+  const idadeDoPaciente = hoje.diff(dataDeNascimento, "year")
 
   return (
     <tr>

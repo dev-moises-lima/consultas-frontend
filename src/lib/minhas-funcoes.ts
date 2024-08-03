@@ -20,9 +20,9 @@ export function obterCorDaCondicao (condicao: CondicaoDoPaciente) {
 
 export function generateUUID() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+    const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8)
     return v.toString(16);
-  });
+  })
 }
 
 export function normalizar(texto: string) {
@@ -30,8 +30,8 @@ export function normalizar(texto: string) {
   .toLowerCase()
   .normalize('NFD')
   .replace(/[\u0300-\u036f]/g, "") // Remove diacríticos
-  .replace(/ç/g, "c")
-  .replace(/\s/g, "")             // Remove cedilhas
+  .replace(/ç/g, "c")              // Remove cedilhas
+  .replace(/\s/g, "")             
 }
 
 type condicao = "pressao arterial diastólica" | "pressao arterial sistólica" | "frequência cardíaca" | "respiracao" | "temperatura"

@@ -12,7 +12,9 @@ export function InfoPaciente({
   paciente
 } : InfoPacienteProps) {
   const [fotoCarregada, setFotoCarregada] = useState(false)
-  const idadeDoPaciente = moment().diff(moment(paciente.data_de_nascimento), "year")
+  const hoje = moment()
+  const dataDeNascimento = moment(paciente.data_de_nascimento, "YYYY/MM/DD")
+  const idadeDoPaciente = hoje.diff(dataDeNascimento, "year")
 
   const condicaoDoPaciente: CondicaoDoPaciente = paciente.condicao_atual
 
