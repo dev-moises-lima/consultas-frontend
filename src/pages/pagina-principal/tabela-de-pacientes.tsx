@@ -50,7 +50,7 @@ export function TabelaDePacientes({ pacientes }: TabelaDePacientesProps) {
               </InputGroup>
             </Col>
           </Row>
-          <Table className="m-0" striped bordered>
+          <Table className="m-0" striped bordered hover>
             <thead>
               <tr>
                 <th>ID</th>
