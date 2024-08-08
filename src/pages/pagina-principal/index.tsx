@@ -5,6 +5,7 @@ import { Button } from "react-bootstrap";
 import { api } from "../../lib/axios.ts";
 import { Mensagem, Paciente } from "../../lib/minhas-interfaces-e-tipos";
 import { Notificacao } from "../../components/notificacao";
+import { AxiosError } from "axios";
 
 export function PaginaPrincipal() {
   const [modalDeCadastroAberto, setModalDeCadastroAberto] = useState(false)
@@ -16,8 +17,11 @@ export function PaginaPrincipal() {
     try {
       const resposta = await api.get("pacientes")
       setPacientes(resposta.data)
-    } catch (response) {
-      console.log(response)
+      console.log(resposta);
+      
+    } catch (erro: any) {
+      const axiosError: AxiosError = erro
+      console.log(axiosError.code)
     }
   }
 
@@ -44,7 +48,7 @@ export function PaginaPrincipal() {
   }
 
   return (
-    <div className="conteiner-fluid px-2 px-sm-3 px-md-4 px-lg-5 py-2 py-sm-3 py-lg-4">
+    <>
       {mensagens &&
         mensagens.map((mensagem) => (
           <Notificacao
@@ -70,6 +74,6 @@ export function PaginaPrincipal() {
         setMensagens={setMensagens}
       />
       <TabelaDePacientes pacientes={pacientes} />
-    </div>
+    </>
   );
 }

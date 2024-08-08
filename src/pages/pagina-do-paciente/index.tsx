@@ -9,6 +9,7 @@ import { Consulta, Mensagem, Paciente } from "../../lib/minhas-interfaces-e-tipo
 import { api } from "../../lib/axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { Notificacao } from "../../components/notificacao";
+import { AxiosError } from "axios";
 
 export function PaginaDoPaciente() {
   const [mensagens, setMensagens] = useState<Mensagem[]>([])
@@ -62,8 +63,9 @@ export function PaginaDoPaciente() {
       try {
         const resposta = await api.get(`pacientes/${pacienteId}/consultas`)
         setConsultas(resposta.data)
-      } catch (erro) {
-        console.log(erro);
+      } catch (erro: any) {
+        const axiosError: AxiosError = erro
+        console.log(axiosError.request)
       }
     }
 
@@ -73,7 +75,7 @@ export function PaginaDoPaciente() {
   }, [controleDeAtualizacaoDoPaciente])
 
   return (
-    <div className="px-2 px-sm-3 px-md-4 px-lg-5 py-2 py-sm-3 py-lg-4">
+    <>
       {mensagens && mensagens.slice().reverse().map(mensagem => (
         <Notificacao
           onClose={() => removerMensagem(mensagem[2])}
@@ -126,7 +128,7 @@ export function PaginaDoPaciente() {
           </h1>
         </div>
       )}
-    </div>
+    </>
   )
 }
 
